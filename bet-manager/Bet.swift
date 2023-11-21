@@ -17,21 +17,41 @@ struct Sport: Hashable {
     let imageUrl: String
 }
 
-
-struct Bet: Identifiable {
-    let id = UUID()
-    let name: String
-    let sport: Sport
-    let odd: Float
-    let status: BetStatus
-    let cash: Float
-    let created_at: String
-    
+class BetCollection: ObservableObject {
+    @Published var bets: [Bet]
+    init(bets: [Bet]) {
+        self.bets = bets
+    }
 }
+
+
+
+class Bet: Identifiable, ObservableObject {
+    let id = UUID()
+    @Published var name: String
+    @Published var sport: Sport
+    @Published var odd: Float
+    @Published var status: BetStatus
+    @Published var cash: Float
+    @Published var createdAt: String
+    @Published var isFavorite: Bool
+    
+    init(name: String, sport: Sport, odd: Float, status: BetStatus, cash: Float, createdAt: String, isFavorite: Bool) {
+        self.name = name
+        self.sport = sport
+        self.odd = odd
+        self.status = status
+        self.cash = cash
+        self.createdAt = createdAt
+        self.isFavorite = isFavorite
+    }
+}
+
+
 
 extension Bet {
     static let previewBet: [Bet] = [
-        Bet(name: "PSG - OM", sport: Sport(name: "Football", imageUrl: "https://media.istockphoto.com/id/610241662/fr/photo/ballon-de-football-isol%C3%A9-sur-fond-blanc.jpg?s=612x612&w=0&k=20&c=yulUStMmoLbwnNrLT8eNcN_IX4Af8eyPLKhHyOPwFjY="), odd: 2, status: BetStatus(name: "En cours", color: .gray), cash: 10, created_at: formattedCurrentDate()),]
+        Bet(name: "PSG - OM", sport: Sport(name: "Football", imageUrl: "https://media.istockphoto.com/id/610241662/fr/photo/ballon-de-football-isol%C3%A9-sur-fond-blanc.jpg?s=612x612&w=0&k=20&c=yulUStMmoLbwnNrLT8eNcN_IX4Af8eyPLKhHyOPwFjY="), odd: 2, status: BetStatus(name: "En cours", color: .gray), cash: 10, createdAt: formattedCurrentDate(), isFavorite: false),]
     
     static func formattedCurrentDate() -> String {
         let dateFormatter = DateFormatter()

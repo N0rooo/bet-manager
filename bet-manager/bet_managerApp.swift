@@ -11,7 +11,7 @@ import SwiftUI
 struct bet_managerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(bets: [])
+            ContentView(betCollection: BetCollection(bets: Bet.previewBet))
         }
     }
 }

@@ -8,17 +8,23 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isPresented: Bool = false
-    @State var bets: [Bet]
+    @StateObject var betCollection: BetCollection
     
     var body: some View {
-            
         NavigationView {
             List {
                 Section(header: Text("Bet Manager").font(.title).fontWeight(.bold)) {
-                    ForEach(bets, id: \.id) { bet in
-                        BetRow(bet: bet)
-                    }.onDelete(perform: { bet in
-                        bets.remove(atOffsets: bet)
+                    ForEach(betCollection.bets, id: \.id) { bet in
+                        NavigationLink {
+                            BetDetailsView(bet: bet)
+                        } label: {
+                            BetRow(bet: bet)
+                        }
+                        
+                    }
+                    
+                    .onDelete(perform: { bet in
+                        betCollection.bets.remove(atOffsets: bet)
                         
                     })
                 }
@@ -34,8 +40,9 @@ struct ContentView: View {
                     .padding()
             }
             )
+            
             .sheet(isPresented: $isPresented) {
-                NewBetView(bets: $bets, isPresented: $isPresented)
+                NewBetView(betCollection: betCollection, isPresented: $isPresented)
             }
         }
     }
@@ -43,6 +50,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(bets: Bet.previewBet)
+        ContentView( betCollection: BetCollection(bets: Bet.previewBet))
     }
 }

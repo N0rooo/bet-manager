@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct BetRow: View {
-    var bet: Bet
+   @ObservedObject var bet: Bet
     var body: some View {
         let profit: Float = Bet.getProfits(bet: bet)
         let isWon: Bool = bet.status.name != "Perdu"
         HStack{
             VStack(alignment: .leading){
                 HStack{
-                    Text(bet.created_at + " -")
+                    Text(bet.createdAt + " -")
                     Text(bet.status.name)
                         .padding(5)
                         .foregroundColor(.white)
@@ -45,10 +45,10 @@ struct BetRow: View {
             }
             Divider()
             VStack{
-                Text((isWon ? "+" : "") + String(profit) + "€")
+                Text("\(isWon ? "+" : "")\(String(profit))€")
                     .foregroundColor(bet.status.color)
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/){
-                    Text(String(bet.cash) + "€ - " + String(bet.odd))
+                    Text("\(String(bet.cash))€ -  \(String(bet.odd))")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
