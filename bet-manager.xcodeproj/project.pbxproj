@@ -13,6 +13,7 @@
 		0513270C2B0B6CF5004D7A67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0513270B2B0B6CF5004D7A67 /* Preview Assets.xcassets */; };
 		05406D552B0B98B7005341D9 /* NewBetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05406D542B0B98B7005341D9 /* NewBetView.swift */; };
 		05406D5B2B0BB113005341D9 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05406D5A2B0BB113005341D9 /* Bet.swift */; };
+		05BC8FA52B0CAC520066C6B5 /* BetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BC8FA42B0CAC520066C6B5 /* BetRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		0513270B2B0B6CF5004D7A67 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		05406D542B0B98B7005341D9 /* NewBetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBetView.swift; sourceTree = "<group>"; };
 		05406D5A2B0BB113005341D9 /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
+		05BC8FA42B0CAC520066C6B5 /* BetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				051327042B0B6CF4004D7A67 /* bet_managerApp.swift */,
 				05406D542B0B98B7005341D9 /* NewBetView.swift */,
+				05BC8FA42B0CAC520066C6B5 /* BetRow.swift */,
 				05406D5A2B0BB113005341D9 /* Bet.swift */,
 				051327062B0B6CF4004D7A67 /* ContentView.swift */,
 				051327082B0B6CF5004D7A67 /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 				051327072B0B6CF4004D7A67 /* ContentView.swift in Sources */,
 				05406D552B0B98B7005341D9 /* NewBetView.swift in Sources */,
 				051327052B0B6CF4004D7A67 /* bet_managerApp.swift in Sources */,
+				05BC8FA52B0CAC520066C6B5 /* BetRow.swift in Sources */,
 				05406D5B2B0BB113005341D9 /* Bet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

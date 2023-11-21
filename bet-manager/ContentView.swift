@@ -11,12 +11,16 @@ struct ContentView: View {
     @State var bets: [Bet]
     
     var body: some View {
+            
         NavigationView {
             List {
                 Section(header: Text("Bet Manager").font(.title).fontWeight(.bold)) {
                     ForEach(bets, id: \.id) { bet in
-                        Text(bet.name)
-                    }
+                        BetRow(bet: bet)
+                    }.onDelete(perform: { bet in
+                        bets.remove(atOffsets: bet)
+                        
+                    })
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -25,13 +29,13 @@ struct ContentView: View {
                                     Button(action: {
                 isPresented.toggle()
             }) {
-                Image(systemName: "plus.circle")
+                Image(systemName: "plus")
                     .imageScale(.large)
                     .padding()
             }
             )
             .sheet(isPresented: $isPresented) {
-                NewBetView(bets: $bets)
+                NewBetView(bets: $bets, isPresented: $isPresented)
             }
         }
     }
