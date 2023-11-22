@@ -48,62 +48,73 @@ struct NewBetView: View {
     let isError: Bool = false
     
     var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Ajouter un paris")) {
-                    TextField("Nom du paris", text: $name)
-                    Picker(selection: $sport, label: Text("Sport")) {
-                        ForEach(BetUtils.sportsList, id: \.self) { sport in
-                            Text(sport.name)
+        NavigationView{
+            VStack {
+                Form {
+                    Section{
+                        TextField("Nom du paris", text: $name)
+                        Picker(selection: $sport, label: Text("Sport")) {
+                            ForEach(BetUtils.sportsList, id: \.self) { sport in
+                                Text(sport.name)
+                            }
+                            
+                        }
+                        
+                        Picker(selection: $competition, label: Text("Compétition")) {
+                            ForEach(viewModel.sportTitles, id: \.self) { title in
+                                Text(title)
+                            }
+                        }
+                        TextField("Cote", text: $odd)
+                        TextField("Mise", text: $cash)
+                        Picker(selection: $status, label: Text("Status")) {
+                            ForEach(BetUtils.statusList, id: \.self) { status in
+                                Text(status.name)
+                            }
                         }
                         
                     }
-                    
-                    Picker(selection: $competition, label: Text("Compétition")) {
-                        ForEach(viewModel.sportTitles, id: \.self) { title in
-                            Text(title)
-                        }
+                }
+                .padding(.top, 20)
+                .onAppear{
+                    viewModel.fetch()
+                }
+                
+                
+                Spacer()
+                
+                Button(action: {
+                    let date = Bet.formattedCurrentDate()
+                    if cash.isEmpty || odd.isEmpty {
+                        return
                     }
-                    TextField("Cote", text: $odd)
-                    TextField("Mise", text: $cash)
-                    Picker(selection: $status, label: Text("Status")) {
-                        ForEach(BetUtils.statusList, id: \.self) { status in
-                            Text(status.name)
-                        }
+                    else if let oddValue = Float(odd), let cashValue = Float(cash) {
+                        betCollection.bets.append(Bet(name: name, sport: sport, competition: competition, odd: oddValue, status: status, cash: cashValue, createdAt: date, isFavorite: false))
+                        
+                        isPresented.toggle()
+                    } else {
+                        return
                     }
-                    
-                }
-            }
-            .padding(.top, 20)
-            .onAppear{
-                viewModel.fetch()
-            }
-            
-            
-            Spacer()
-            
-            Button(action: {
-                let date = Bet.formattedCurrentDate()
-                if cash.isEmpty || odd.isEmpty {
-                    return
-                }
-                else if let oddValue = Float(odd), let cashValue = Float(cash) {
-                    betCollection.bets.append(Bet(name: name, sport: sport, competition: competition, odd: oddValue, status: status, cash: cashValue, createdAt: date, isFavorite: false))
-                    
-                    isPresented.toggle()
-                } else {
-                    return
-                }
-            }, label: {
-                Text("Valider")
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-            })
-            .padding()
-            
+                }, label: {
+                    Text("Valider")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                })
+                .padding()
+                
+            }.navigationBarTitle("Ajouter un paris", displayMode: .inline)
+                .navigationBarItems(
+                    leading: Button(action: {
+                        // Add code to handle cancel action
+                        isPresented.toggle()
+                    }) {
+                        Text("Annuler")
+                    }
+                )
         }
+        
     }
 }
 
