@@ -23,5 +23,10 @@ extension BetUtils {
         BetStatus(name: "Gagné", color: .green),
         BetStatus(name: "Perdu", color: .red)
     ]
+    
+    
+
+    
+    
 }
     

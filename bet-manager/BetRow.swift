@@ -33,7 +33,7 @@ struct BetRow: View {
                         image.resizable()
                             .clipShape( Circle())
                     }placeholder: {
-                        Circle()
+                        ProgressView()
                     }.frame(
                         width: 30,
                         height: 30
@@ -49,10 +49,10 @@ struct BetRow: View {
             }
             Divider()
             VStack{
-                Text("\(isWon ? "+" : "")\(String(profit))€")
+                Text("\(isWon ? "+" : "")\(String(format: "%.2f", profit))€")
                     .foregroundColor(bet.status.color)
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/){
-                    Text("\(String(bet.cash))€ -  \(String(bet.odd))")
+                    Text("\(String(format: "%.2f", bet.cash))€ - \(String(format: "%.2f", bet.odd))")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
