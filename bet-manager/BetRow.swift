@@ -15,6 +15,10 @@ struct BetRow: View {
         HStack{
             VStack(alignment: .leading){
                 HStack{
+                    if bet.isFavorite {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                    }
                     Text(bet.createdAt + " -")
                     Text(bet.status.name)
                         .padding(5)
