@@ -36,7 +36,7 @@ struct NewBetView: View {
     @State var image: String = ""
     @StateObject var viewModel = ViewModel()
     
-    @State var competition: String = ""
+    @State var competition: String = "CFL"
     
     @State var sport: Sport = Sport(name: "Football", imageUrl: "https://media.istockphoto.com/id/610241662/fr/photo/ballon-de-football-isol%C3%A9-sur-fond-blanc.jpg?s=612x612&w=0&k=20&c=yulUStMmoLbwnNrLT8eNcN_IX4Af8eyPLKhHyOPwFjY=")
     
@@ -107,7 +107,6 @@ struct NewBetView: View {
             }.navigationBarTitle("Ajouter un paris", displayMode: .inline)
                 .navigationBarItems(
                     leading: Button(action: {
-                        // Add code to handle cancel action
                         isPresented.toggle()
                     }) {
                         Text("Annuler")

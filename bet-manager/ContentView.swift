@@ -12,62 +12,30 @@ struct ContentView: View {
     @State private var totalProfits: Float = 0
     
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Section(header: Text("Bet Manager").font(.title).fontWeight(.bold)) {
-                        ForEach(betCollection.bets, id: \.id) { bet in
-                            NavigationLink {
-                                BetDetailsView(bet: bet)
-                            } label: {
-                                BetRow(bet: bet)
-                            }
-                        }
-                        .onDelete(perform: { bet in
-                            betCollection.bets.remove(atOffsets: bet)
-                            updateProfits()
-                        })
+        TabView{
+            NavigationView {
+                MainView(betCollection: betCollection, isPresented: $isPresented, totalProfits: $totalProfits)
+                    .onAppear {
+                        updateProfits()
                     }
-                }
-                .listStyle(InsetGroupedListStyle())
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing:
-                                        Button(action: {
-                    isPresented.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .imageScale(.large)
-                        .padding()
-                }
-                )
-                .sheet(isPresented: $isPresented) {
-                    NewBetView(betCollection: betCollection, isPresented: $isPresented)
-                        .onDisappear{
-                            updateProfits()
-                        }
-                    
-                }
-                Spacer()
-                
-                VStack{
-                    Text("Total :")
-                        .foregroundColor(.gray)
-                    HStack {
-                        Spacer()
-                        Text("\(totalProfits > 0 ? "+" : "") \(String(format: "%.2f", totalProfits)) €")
-                            .fontWeight(.bold)
-                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(getTextColor(for: totalProfits))
-                        
-                        Spacer()
-                    }
-                    
-                }.padding(.vertical, 30)
             }
-            .edgesIgnoringSafeArea(.bottom)
-            .onAppear {
-                updateProfits()
+            .tabItem {
+                Image(systemName: "list.bullet")
+                Text("Paris")
             }
+            
+            Text("Statistiques")
+                .tabItem {
+                    Image(systemName: "chart.pie.fill")
+                    Text("Stats")
+                }
+            
+            Text("Profil")
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profil")
+                }
+            
         }
     }
     
@@ -99,4 +67,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(betCollection: BetCollection(bets: Bet.previewBet))
     }
 }
+
 
