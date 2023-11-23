@@ -127,7 +127,7 @@ struct BetDetailsView: View {
             .padding()
             .navigationTitle(bet.name)
             .onAppear {
-                viewModel.fetch()
+                viewModel.fetchSports()
                 editedName = bet.name
                 editedCash = String(bet.cash)
                 editedOdd = String(bet.odd)
@@ -152,6 +152,15 @@ struct BetDetailsView: View {
         bet.sport = editedSport
         bet.competition = editedCompetition
         
+        Task {
+            do {
+                let betDatabase = BetDatabase()
+                try await betDatabase.updateBet(bet: bet)
+                
+            } catch {
+                print("Error fetching bets: \(error)")
+            }
+        }
     }
 }
 

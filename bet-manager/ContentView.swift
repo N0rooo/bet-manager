@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isPresented: Bool = false
-    @ObservedObject var betCollection: BetCollection = BetCollection(bets: Bet.previewBet)
+    @State var betCollection: BetCollection = BetCollection(bets: Bet.previewBet)
     @State private var totalProfits: Float = 0
     
     var body: some View {
@@ -16,8 +16,22 @@ struct ContentView: View {
             NavigationView {
                 MainView(betCollection: betCollection, isPresented: $isPresented, totalProfits: $totalProfits)
                     .onAppear {
-                        updateProfits()
+                        Task {
+                            do {
+                                let betDatabase = BetDatabase()
+                                let newBets = try await betDatabase.getBets()
+                                
+                                Task {
+                                    betCollection = newBets
+                                    updateProfits()
+                                }
+                            } catch {
+                                print("Error fetching bets: \(error)")
+                            }
+                        }
+                        
                     }
+                
             }
             .tabItem {
                 Image(systemName: "list.bullet")

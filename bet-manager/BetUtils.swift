@@ -19,11 +19,10 @@ extension BetUtils {
     ]
     
     static let statusList: [BetStatus] = [
-        BetStatus(name: "En cours", color: .gray),
-        BetStatus(name: "Gagné", color: .green),
-        BetStatus(name: "Perdu", color: .red)
+        BetStatus(name: "En cours", colorHex: "#808080"),
+        BetStatus(name: "Gagné", colorHex: "#00FF00"),
+        BetStatus(name: "Perdu", colorHex: "#FF0000")
     ]
-    
     
 
     

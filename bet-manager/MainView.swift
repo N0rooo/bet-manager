@@ -23,10 +23,23 @@ struct MainView: View {
                             BetRow(bet: bet)
                         }
                     }
-                    .onDelete(perform: { bet in
-                        betCollection.bets.remove(atOffsets: bet)
-                        updateProfits()
-                    })
+                    .onDelete { indexSet in
+                        for index in indexSet {
+                            let deletedBet = betCollection.bets[index]
+                            betCollection.bets.remove(atOffsets: [index])
+                            updateProfits()
+
+                            Task {
+                                do {
+                                    let betDatabase = BetDatabase()
+                                    print(deletedBet.id)
+                                    try await betDatabase.deleteBet(id: deletedBet.id)
+                                } catch {
+                                    print("Error deleting bet: \(error)")
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -44,6 +57,7 @@ struct MainView: View {
                 NewBetView(betCollection: betCollection, isPresented: $isPresented)
                     .onDisappear{
                         updateProfits()
+                        
                     }
             }
             Spacer()
